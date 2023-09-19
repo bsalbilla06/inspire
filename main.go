@@ -3,6 +3,8 @@ package main
 import (
   "fmt"
   "encoding/json"
+  "net/http"
+  "io"
 )
 
 type Quote struct {
@@ -11,17 +13,24 @@ type Quote struct {
 }
 
 func main() {
-	var quote1 Quote
+	quote := make([]Quote, 1)
 
-	Data := []byte(`{
-		"q": "A wise man once said nothing at all",
-		"a": "Drake"
-	}`)
-
-	err := json.Unmarshal(Data, &quote1)
+	url := "https://zenquotes.io/api/random"
+	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("%v said \"%v\"\n", quote1.Author, quote1.Words)
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer response.Body.Close()
+	
+	err = json.Unmarshal(body, &quote)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("%v once said \"%v\"\n", quote[0].Author, quote[0].Words)
 }
