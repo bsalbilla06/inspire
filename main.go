@@ -32,5 +32,5 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Printf("%v once said \"%v\"\n", quote[0].Author, quote[0].Words)
+	fmt.Printf("\"%v\" - %v\n", quote[0].Words, quote[0].Author)
 }
