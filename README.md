@@ -1,1 +1,1 @@
-Run ./inspire in the terminal to get an inspirational quote
+# Run ./inspire in the terminal to get an inspirational quote
